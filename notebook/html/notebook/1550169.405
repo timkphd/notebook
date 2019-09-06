@@ -1,0 +1,331 @@
+<!-- Author: thk -->
+<!-- Date: Thu Feb 14 18:36:45 2019 (GMT) -->
+<!-- Title: git between two machines -->
+<!-- Keywords: git  -->
+<!-- Changes: Added Thu Feb 14 18:36:45 2019 (GMT) thk | -->
+pi@raspberrypi:~/darwin/dir1/dir1 $ git checkout 123 
+Switched to branch '123' 
+pi@raspberrypi:~/darwin/dir1/dir1 $ vi makefile 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git add -u 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git commit -m "qwerty" 
+[123 c65af39] qwerty 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+pi@raspberrypi:~/darwin/dir1/dir1 $ gidd diff 123..master 
+bash: gidd: command not found 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git diff 123..master 
+diff --git a/makefile b/makefile 
+index 373eda1..3d65723 100644 
+--- a/makefile 
++++ b/makefile 
+@@ -1,4 +1,4 @@ 
+-#qwerty 
++#abcdefghijk 
+ all: allocate array 
+  
+ CC=gcc 
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+ 
+########## 
+hexagon:dir1 tkaiser$  
+hexagon:dir1 tkaiser$ git branch 
+  123 
+* master 
+hexagon:dir1 tkaiser$  
+ 
+ 
+########## 
+ 
+ 
+ 
+ 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git checkout -b onpie 
+Switched to a new branch 'onpie' 
+pi@raspberrypi:~/darwin/dir1/dir1 $ ls 
+allocate_test.f90  makefile        malloc_count.h    sep_allocate.f90  splay_allocate.f90 
+array_test.f90     malloc_count.c  malloc_dummy.f90  sep_main.f90      splay_array.f90 
+pi@raspberrypi:~/darwin/dir1/dir1 $ vi makefile 
+pi@raspberrypi:~/darwin/dir1/dir1 $ head makefile 
+#on pie 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git add -u 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git commit -m "on pie" 
+[onpie 3c95c27] on pie 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git push origin onpie 
+Warning: No xauth data; using fake authentication data for X11 forwarding. 
+X11 forwarding request failed on channel 0 
+Counting objects: 3, done. 
+Delta compression using up to 4 threads. 
+Compressing objects: 100% (3/3), done. 
+Writing objects: 100% (3/3), 306 bytes | 0 bytes/s, done. 
+Total 3 (delta 2), reused 0 (delta 0) 
+To hex:/Users/tkaiser/gitit/dir1 
+ * [new branch]      onpie -> onpie 
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+ 
+########## 
+ 
+ 
+ 
+hexagon:dir1 tkaiser$ git branch 
+  123 
+* master 
+  onpie 
+hexagon:dir1 tkaiser$ head makefile 
+#qwerty 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+hexagon:dir1 tkaiser$ git merge onpie 
+Updating c65af391..3c95c27a 
+Fast-forward 
+ makefile | 2 +- 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+hexagon:dir1 tkaiser$ head makefile 
+#on pie 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+hexagon:dir1 tkaiser$  
+ 
+ 
+########## 
+ 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git diff master..onpie 
+diff --git a/makefile b/makefile 
+index 373eda1..b48f10c 100644 
+--- a/makefile 
++++ b/makefile 
+@@ -1,4 +1,4 @@ 
+-#qwerty 
++#on pie 
+ all: allocate array 
+  
+ CC=gcc 
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+ 
+ 
+ 
+ CC=gcc 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git push origin 123 
+Warning: No xauth data; using fake authentication data for X11 forwarding. 
+X11 forwarding request failed on channel 0 
+Counting objects: 3, done. 
+Delta compression using up to 4 threads. 
+Compressing objects: 100% (3/3), done. 
+Writing objects: 100% (3/3), 308 bytes | 0 bytes/s, done. 
+Total 3 (delta 2), reused 0 (delta 0) 
+To hex:/Users/tkaiser/gitit/dir1 
+   d8e83a8..c65af39  123 -> 123 
+pi@raspberrypi:~/darwin/dir1/dir1  
+ 
+ 
+########## 
+ 
+hexagon:dir1 tkaiser$ git diff 123..master 
+diff --git a/makefile b/makefile 
+index 373eda11..3d657238 100644 
+--- a/makefile 
++++ b/makefile 
+@@ -1,4 +1,4 @@ 
+-#qwerty 
++#abcdefghijk 
+ all: allocate array 
+  
+ CC=gcc 
+hexagon:dir1 tkaiser$ head makefile 
+#abcdefghijk 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+hexagon:dir1 tkaiser$  
+ 
+ 
+ 
+hexagon:dir1 tkaiser$ git branch 
+  123 
+* master 
+hexagon:dir1 tkaiser$ git merge 123 
+Updating d8e83a85..c65af391 
+Fast-forward 
+ makefile | 2 +- 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+hexagon:dir1 tkaiser$ head makefile 
+#qwerty 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+hexagon:dir1 tkaiser$  
+ 
+########## 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git diff 123...master 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git checkout master 
+Switched to branch 'master' 
+Your branch is up-to-date with 'origin/master'. 
+pi@raspberrypi:~/darwin/dir1/dir1 $ head makefile  
+#abcdefghijk 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git pull 
+Warning: No xauth data; using fake authentication data for X11 forwarding. 
+X11 forwarding request failed on channel 0 
+From hex:/Users/tkaiser/gitit/dir1 
+   d8e83a8..c65af39  master     -> origin/master 
+Updating d8e83a8..c65af39 
+Fast-forward 
+ makefile | 2 +- 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+pi@raspberrypi:~/darwin/dir1/dir1 $ head makefile  
+#qwerty 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+ 
+ 
+ 
+ 
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+pi@raspberrypi:~/darwin/dir1/dir1 $ git checkout -b onpie 
+Switched to a new branch 'onpie' 
+pi@raspberrypi:~/darwin/dir1/dir1 $ ls 
+allocate_test.f90  makefile        malloc_count.h    sep_allocate.f90  splay_allocate.f90 
+array_test.f90     malloc_count.c  malloc_dummy.f90  sep_main.f90      splay_array.f90 
+pi@raspberrypi:~/darwin/dir1/dir1 $ vi makefile 
+pi@raspberrypi:~/darwin/dir1/dir1 $ head makefile 
+#on pie 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git add -u 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git commit -m "on pie" 
+[onpie 3c95c27] on pie 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git push origin onpie 
+Warning: No xauth data; using fake authentication data for X11 forwarding. 
+X11 forwarding request failed on channel 0 
+Counting objects: 3, done. 
+Delta compression using up to 4 threads. 
+Compressing objects: 100% (3/3), done. 
+Writing objects: 100% (3/3), 306 bytes | 0 bytes/s, done. 
+Total 3 (delta 2), reused 0 (delta 0) 
+To hex:/Users/tkaiser/gitit/dir1 
+ * [new branch]      onpie -> onpie 
+pi@raspberrypi:~/darwin/dir1/dir1 $ ls 
+allocate_test.f90  makefile        malloc_count.h    sep_allocate.f90  splay_allocate.f90 
+array_test.f90     malloc_count.c  malloc_dummy.f90  sep_main.f90      splay_array.f90 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git diff master..onpie 
+diff --git a/makefile b/makefile 
+index 373eda1..b48f10c 100644 
+--- a/makefile 
++++ b/makefile 
+@@ -1,4 +1,4 @@ 
+-#qwerty 
++#on pie 
+ all: allocate array 
+  
+ CC=gcc 
+pi@raspberrypi:~/darwin/dir1/dir1 $ ls 
+allocate_test.f90  makefile        malloc_count.h    sep_allocate.f90  splay_allocate.f90 
+array_test.f90     malloc_count.c  malloc_dummy.f90  sep_main.f90      splay_array.f90 
+pi@raspberrypi:~/darwin/dir1/dir1 $ branch 
+bash: branch: command not found 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git branch 
+  123 
+  master 
+* onpie 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git pull origin master 
+Warning: No xauth data; using fake authentication data for X11 forwarding. 
+X11 forwarding request failed on channel 0 
+From hex:/Users/tkaiser/gitit/dir1 
+ * branch            master     -> FETCH_HEAD 
+   c65af39..3c95c27  master     -> origin/master 
+Already up-to-date. 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git diff master..onpie 
+diff --git a/makefile b/makefile 
+index 373eda1..b48f10c 100644 
+--- a/makefile 
++++ b/makefile 
+@@ -1,4 +1,4 @@ 
+-#qwerty 
++#on pie 
+ all: allocate array 
+  
+ CC=gcc 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git checkout master 
+Switched to branch 'master' 
+Your branch is behind 'origin/master' by 1 commit, and can be fast-forwarded. 
+  (use "git pull" to update your local branch) 
+pi@raspberrypi:~/darwin/dir1/dir1 $ git pull 
+Warning: No xauth data; using fake authentication data for X11 forwarding. 
+X11 forwarding request failed on channel 0 
+Updating c65af39..3c95c27 
+Fast-forward 
+ makefile | 2 +- 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+pi@raspberrypi:~/darwin/dir1/dir1 $ head makefile 
+#on pie 
+all: allocate array 
+ 
+CC=gcc 
+FC=gfortran 
+ 
+ifdef intel 
+CC=icc 
+FC=ifort 
+endif 
+pi@raspberrypi:~/darwin/dir1/dir1 $  
+ 
+

@@ -1,0 +1,255 @@
+
+  General information for the Electronic Notebook v1.12
+  -----------------------------------------------------
+   (a demo version of v1.12 can be tried out at
+    http://www.csm.ornl.gov/~geist/enote/)
+
+  Version 1.12 is backwards compatible with pages stored by previous
+versions of our electronic notebook software. So users with existing
+installations can just point the new software at the existing notebooks.
+
+  The electronic notebook is part of a project funded by the US Department of
+Energy under its DOE2000 National Collaboratory Initiative.  The project aims
+to develop an electronic counterpart to scientists' notebooks; the software
+being distributed is a prototype implementation of such a counterpart.  The
+project is on-going, and you may wish to check our web page at
+
+    http://www.csm.ornl.gov/~geist/java/applets/enote
+
+for the latest developments and more detailed descriptions of the notebook
+functions provided with this prototype.
+
+  The notebook is Web-based, requiring a Web server and Perl to run, and a
+Web browser to access.  
+
+All the software is contained in two scripts: enote112.pl, and enotelib.pl. 
+These can be found in the enote1.12/cgi-bin directory. enote112.pl is a
+configuration file and should be placed in the web server's cgi-bin 
+directory. It's settings are described below as well as in the file itself.
+enotelib.pl implements all the functions in the notebook and can be placed
+anywhere on the web server as long as the pointer in enote112.pl points to it.
+
+The enote1.12/html directory should be placed where the web server can
+display pages from it. It contains a sample notebook cover page - enote.html, 
+a subdirectory named gifs that contain GIF files for the various menu buttons. 
+It also contains a sample notebook subdirectory with a couple sample pages in it. 
+Finally, it contains a file subscriptions.ens that would be used if 
+the new notification feature is activated in version 1.12.  
+
+The file "enote112.pl" contains user-settable configuration variables,
+as well as a small stub that loads the library from "enotelib.pl"
+and passes execution to the main routine therein.
+The file "enotelib.pl" contains the routines required by the notebook.
+
+The configuration variables in "enote112.pl" determine the
+actual location of the notebook entries; in addition, by restricting Web access
+to "enote112.pl", it is possible to control access to the notebook.  The loader
+is capable of supporting several notebooks, all of which would share the same
+access controls.  To set up a notebook with different access groups, copy the
+loader "enote112.pl" to different directories and set different Web access
+controls in each directory (though all the loaders would still share the same
+library file "enotelib.pl", and the same GIF files).
+
+  Prerequisites
+  -------------
+
+    - Perl version 5
+
+  Free copies are available from http://www.perl.com/
+Just pick the version for your operating systems and install it on your
+system. Many running web servers will already have Perl installed.
+
+    - a Web server (If you don't have one)
+
+  The full details of how to install a Web server depend on your choice of Web
+server.  The notebook requires that you enable CGI support for some directory
+(we'll call it the "cgi-bin" directory, though its name and location are up to
+you).  There are a number of free webservers available on the web. On my 
+windows laptop I run FNord which is small, simple to set up, and 
+unsophisitcated. A copy of the FNord can be found on our enote web page.
+With your web server, you also need to enable support for Perl scripts, 
+which is usually done by creating an association between files 
+ending in ".pl" and your installed Perl binary.  You can test 
+whether the association works or not by double-clicking from the
+Windows Explorer on a Perl script; if the script executes, then the association
+is set up correctly. If you have trouble getting Microsoft's
+personal web server (iis4)to work with Perl, check out the following
+help page on the web:
+http://www.whitecrow.demon.co.uk/steve/iis4.html 
+
+  If you wish to test the Web server and the Perl installation, cut and paste
+the following short Perl script (the stuff between the "-- cut here --" lines)
+in your cgi-bin directory, in a file called "test.pl" (under Unix, you need to
+put the correct full pathname of the perl interpreter on the first line, after
+the "!" sign):
+
+-- cut here --
+#!/usr/somebin/perl
+#
+#  Short Perl script.
+#
+print "Content-type: text/html\n\n";
+print "<html><head><title>Test Page</title></head>\n";
+print "<body><p>Everything seems OK.</p></body></html>\n";
+-- cut here --
+
+  Then try running it over the server, which means starting the server and a
+browser and loading "http://your_servers_name/cgi-bin/test.pl" in the browser
+("your_servers_name" is the name of your server machine, or "localhost" might
+also work).
+
+  Once your Web server is installed and can serve Perl CGI scripts, you're
+ready to install the Electronic Notebook.
+
+  Installation notes
+  ------------------
+  0.  One installation of the software can support multiple notebooks,
+each with shared access to multiple users. It can also be installed as
+a private electronic notebook for only a single user access. Private notebooks
+can be setup on laptops or network servers.
+
+  1.  Install the loader Perl CGI script "enote112.pl" in the server's "cgi-bin"
+directory.  Depending on your setup, you may need to rename it to "enote112.cgi".
+
+  2.  Edit the script file "enote112.pl" to customize the script for your setup.
+If you use a word processor that supports a native mode, such as the Microsoft
+Word native format or the WordPerfect native format, then please make sure you
+save the file as plain text (or ASCII), and not in the native mode.  If you are
+not familiar with Perl, then just make sure you respect the format of the lines
+you change; in particular, quotes around strings and the semi-colon at the end
+of lines are required.
+
+  -  On a Unix system, you need to set on the first line the path to the Perl
+interpreter, usually /usr/bin/perl or /usr/local/bin/perl.
+
+  The configuration variables are split up in three sections:
+
+  -  Section 1 sets the notebook names, their directories and titles.  For each
+notebook that you wish to define, you need to specify a directory where its
+entries will be placed, and a title for the notebook.  The directory must
+exist, so make sure it is created before you attempt to use that notebook.  The
+script in the distribution supports two example notebooks: the first one is
+called "project", it puts its entries in the directory 
+"/somepath/enote/notebook", and its title is "Project Notebook"
+The second one is called "bob", it puts its
+entries in the directory "/somepath/enote/notebook2", 
+and it title is "Bob's Notebook".
+To access the first notebook, a URL of the form
+
+	http://www.someserver.net/cgi-bin/enote.pl?nb=project
+
+would be used, while to access the second notebook, a URL of the form
+
+	http://www.someserver.net/cgi-bin/enote.pl?nb=bob
+
+would be used.  The default notebook is also specified in Section 1; in the
+distribution, it is set to be the "project" notebook, so if the URL
+
+	http://www.someserver.net/cgi-bin/enote112.pl
+
+is used, then it will open the notebook named "Project Notebook".
+
+Usually the person setting up the notebook will create one or more
+web pages similar to the file enote.html supplied in this distribution
+so that users don't have to remember URL's like the above.
+
+  -  Section 2 sets the MIME types recognized by the notebooks; files with
+these MIME types will be accepted for upload.  The format of each line is a
+descriptive name on the left (the user sees this), and its corresponding MIME
+type on the right.  The distribution notebooks come with 12 MIME types
+defined, such as "text/plain", "text/html", "image/gif", and "image/jpeg"; add or
+delete at will.  You can also change the default MIME type, which is
+specified by its descriptive name (in the distribution, it is "Text, plain")
+rather than its MIME type (which would be "text/plain").
+
+  -  Section 3 sets some configuration variables.  You need to
+set "flock" to 1 if it is supported by your version of Perl (typically only on
+Unix systems), or set it to "0" otherwise.  You set "libdir" to point to the
+directory where the library routines file "enotelib.pl" is located, and you
+set "script" to the full URL for the loader.  Note that, on systems with access
+permissions to directories and files (such as Unix), the file "enotelib.pl" and
+its directory need to be readable by the Web server.
+You set "nobar" depending on whether you want control buttons on the top of
+each page.  For users with access the this enote.pl you can set whether
+they have permission to "add", "delete", "edit", or "annotate" pages.
+Thus, you can set up groups that only have read access to a notebook,
+and another group (using another enote.pl pointing to the same notebook)
+that has permission to modify pages.
+
+  -  Section 4 sets the notebook support images.  You will need to install the
+notebook support GIF images from the "gifs" directory into a directory that is
+visible to the Web server; we'll call this directory the "gifs" directory.  The
+server needs only read acccess to this directory.  You then specify on the
+"$main::gifs" line the URL for this directory.  If you want to customize the 
+buttons or the look, you can create your own version of each of the gifs. 
+
+  3.  Once you are done editing "enote112.pl", make sure that all the directories
+for all the notebooks exist.  Each directory can be anywhere, the only
+requirements are that it be visible to and writable by the Web server.  Don't
+forget the "and writable by" part, especially under Unix.
+
+  4.  Finally, if access to the notebook will be restricted, then the script's
+directory must have the required authentication files.  You'll need to consult
+your server's manuals to see how your Web server handles authentication.  Also,
+if you are concerned about people being able to obtain directory listings in
+the notebook directories (by requesting directory URLs like 
+"http://www.myserver.com/enote/"), then place an empty "index.html" file in
+each of the directories created.
+
+  5.  You can use the supplied enote.html file as a template to
+create covers for your notebooks. Just change the value of "nb=" to
+to the notebook name you specify in enote112.pl.
+
+  Example directory structure
+  ---------------------------
+
+  For reference only, here is the directory structure for the notebook as it
+was installed on one of our machines under Windows 98.
+
+  c:\root
+    This was the root directory of the Web server; requesting a URL of the
+form "http://localhost/filename.html" would serve a file "filename.html" from
+this directory.
+
+  c:\root\cgi-bin
+    The cgi files enote112.pl and enotelib.pl were placed here.
+    This was the cgi-bin directory of the Web server.  The server was set up
+to recognize this directory as a CGI directory and attempt to execute files
+from this directory instead of serving them directly.  We also set up an
+association between files ending in ".pl" and the Perl binary "perl.exe", which
+on our system was in "c:\perl5\bin".
+
+  c:\root\enote
+    This was the top level directory for the notebook stuff.  We had the cover
+pages of the various notebooks, like enote.html, in here. So that accesses of the form 
+"http://localhost/enote/notebookname.html" loads that notebook cover page.
+
+  c:\root\enote\gifs
+    This was the directory for the shared support GIFs; since this directory is
+accessible by browsers (and appears in the HTML source code for the notebook
+pages), we put an empty "index.html" in it.
+
+  c:\root\enote\notebook
+    This was the directory for the entries for the "project" notebook in the
+distribution.
+
+  c:\root\enote\instrument
+    This was the directory for the entries for the instrument logbook
+
+  Note that, under Windows, the path names 'c:\notebooks\demo1' and
+'c:/notebooks/demo1' are equivalent when used in the Perl script.
+
+  Contacting us
+  -------------
+
+There is a help notebook on our Electronic Notebook Web site:
+www.csm.ornl.gov/~geist/java/applets/enote/
+It contains hints and tips for users of the notebooks.
+
+  If you have any problems, suggestions, or praise, we can be contacted at:
+
+  gst@ornl.gov (Al Geist)
+
+  Enjoy!
+	-- Al Geist and Noel Nachtigal and David Yung
+

@@ -1,0 +1,99 @@
+<!-- Author: Al Geist -->
+<!-- Date: Fri Jan  3 01:30:26 2003 (GMT) -->
+<!-- Title: Overview of Electronic Notebook Features -->
+<!-- Keywords:  -->
+<!-- Changes: Modified Fri Jan  3 01:30:26 2003 (GMT) Al Geist | Modified Thu Jan  2 23:36:12 2003 (GMT) Al Geist | Modified Mon Jan 26 17:30:09 1998 (GMT) Al Geist | Added Mon Jan 26 17:28:42 1998 (GMT) Al Geist | -->
+<P>The present version of our notebook provides the following functions    
+divided into two classes: those that modify the notebook and those that    
+just view pages in the notebook.    
+<p>    
+A notebook of hints, tips, FAQ, and recipes for electronic notebook use    
+is going to be maintained at:    
+<a href="http://www.csm.ornl.gov/~geist/enote/cookbook.html">    
+http://www.csm.ornl.gov/~geist/enote/cookbook.html</a>    
+    
+    
+<P><FONT COLOR="#FF0000"><B>Modifying Functions</b></font>    
+    
+<P><B>Add</b> - Creates a new page and puts your entry on it.     
+It brings up an input form that has three options. Input of text/html,    
+uploading a file (eq. image or graph), or draw and insert a sketch.    
+Entry of name and title fields are required.     
+User can cut and paste html source or text into the text input    
+field. For example from netscape composer or Word97.     
+By default the notebook assumes plain text was typed into the input    
+field and it preserves its formating. Once the input is complete, select    
+the appropriate MIME type at the bottom of the form and press submit. This    
+entry will be added to the end of the notebook.    
+<BR>Instead of using the text input field, the user may <B>upload a file</b>    
+into the notebook, for example a gif or jpg image. After submission, the    
+image will appear on the new page and the user can then add more text or    
+images to the page using the "edit" function.    
+<BR>Pressing on the draw sketch link, starts up a <B>Java applet sketchpad</b>.    
+When the submit button is pressed at the bottom of the sketchpad,    
+the sketch is converted into a gif and sent to the new notebook page.    
+In addition to simple sketches,     
+images (Note only those stored on the notebook server)     
+can be dropped on the sketchpad    
+and then sketched over, highlighted, or annotated.    
+    
+<P><B>Edit</b> - Modifies the present page.     
+It brings up the same input form as <B>Add</b> with the same three    
+options. The image and sketchpad inputs are appended to the end of    
+the page.     
+The text input field is filled with the contents of the presently     
+viewed page. Text can be added and an image uploaded at the same time    
+in the "edit" form. On the other hand, the sketchpad should be used alone.    
+The user can edit the contents (for example to correct spelling or formatting)    
+or add additional information to the end or middle of the existing text.     
+Select MimeType "html" and press Submit    
+to put this edited page back in the notebook. The revision    
+log at the top of the page tracks who and when entries were altered.    
+<BR>[<I><B>Notarized</b> entries can not be edited or deleted</i>]    
+    
+<P><B>Delete</b> - deletes the presently viewed page from the notebook.    
+It is equivalent to tearing out a page of a paper notebook. The original    
+page is not actually deleted and is still preserved inside the notebook,    
+but would require a system administrator to manually restore it.    
+The default notebook setup, has this feature disabled.    
+    
+<P><B>Annotate</b> - allows the user to add entries to the bottom of the    
+currently viewed page, for example, to add comments to someone else's     
+entry. Annotate brings up a copy of the present page with an input    
+form at the bottom. It does not allow the original contents to    
+be changed. Annotation is allowed on pages with <B>Notarized</b> entries.    
+(The annotations themselves can be notarized)    
+    
+<P><B>Notarize</b> - Notarize stamps the present page as uneditable, and    
+undeleteable by anyone. (It can still be annotated).    
+<p>    
+Eventually this function will also electronically notarize     
+the viewed entry, but this is still under development.     
+    
+<P><FONT COLOR="#FF0000"><B>Navigation Functions</b></font>    
+    
+<P><B>First</b> - show first page of notebook.    
+<BR><B>Previous</b> - show page previous to present page.    
+<BR><B>Next</b> - show next page.    
+<BR><B>Last</b> - show last page entered in the notebook. (default on startup)    
+<BR><B>Contents</b> - show the table of contents for the notebook.    
+<br>also lists the URLs of all images uploaded into the notebook    
+in case they are needed for reference in other pages.    
+<BR><B>Search</b> - brings up a form that accepts a search string.    
+(Can include wildcards.)    
+<BR>Returns a table-of-contents-like page listing the notebook pages containing    
+matches.    
+<BR>    
+<HR>    
+    
+<P><B>The notebook can be setup to allow some groups    
+to only read a notebook while other groups can have full read and write    
+access to it. The cookbook gives details.</b>    
+    
+<P>The notebook's table of contents is automatically updated    
+to reflect the new page and keywords describing its content. Secure Web    
+server technology can be used to provide the secure transmission of notebook    
+information over the internet.    
+  
+ 
+

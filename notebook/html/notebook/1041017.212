@@ -1,0 +1,89 @@
+<!-- Author: Al Geist -->
+<!-- Date: Thu Jan  2 01:26:39 2003 (GMT) -->
+<!-- Title: More features of  Version 1.12 -->
+<!-- Keywords:  -->
+<!-- Changes: Modified Thu Jan  2 01:26:39 2003 (GMT) Al Geist | Added Fri Dec 27 19:26:52 2002 (GMT) Al Geist | -->
+  
+  
+The new features in this version of E-Note can be configured via the  
+configuration file (enote.pl).  It is advised that the supplied  
+enote112.pl file be adapted to your needs, but existing enote.pl   
+files will work with little or no modification (but some new  
+features will be disabled).  
+  
+Main new features:  
+  
+* Printing  
+  
+  Use the Print buttons to print either all the pages in the notebook,  
+  all the pages matching a search, or individual pages.  
+  The print button for individual pages is off by default but can be  
+  enabled in the configuration via the line:  
+  $main::printpage = 1;  
+  Note that page-breaks after each enote 'page' will not work in  
+  older browsers (such as Netscape versions before 6).  
+  You will also need the line:  
+  $main::print_wd = 38;  
+  - which is in the provided enote112.pl file.  
+  
+  
+* Subscription  
+  
+  E-Note can notify users via email of modifications to pages in  
+  notebooks to which they subscribe.  Subscription is turned on  
+  in the configuration via the line:  
+  $main::subscribe = 1;  
+  
+  You will also need the lines:  
+  $main::subscribe_wd = 68;  
+  $main::unsubscribe_wd = 84;  
+  - which are in the provided enote112.pl file.  
+  
+  Users subscribe via a name and email address.  Any changes to the  
+  pages of notebooks listed in an enote.pl file will cause an email  
+  notification to be sent detailing the changed pages.  The update  
+  process is run by executing the enote.pl program directly  
+  (as opposed to the web-server executing it as a cgi executable).  
+  Under UNIX this can be achieved simply by:  
+  >enote112.pl  
+  (or if the enote112.pl is not marked as executable, >perl enote112.pl)  
+  
+  This command can be scheduled to run automatically once a day  
+  or once a week by using the Unix "at" command or the  
+  Windows task scheduler.  
+  
+  Before subscriptions/unsubscriptions can be made, a subscription  
+  'database' file must be created.  Just create an empty file  
+  that is writable by the web-server (typically in the same directory  
+  as the notebook directory).  This file must then be referenced in   
+  the configuration file. For example:  
+  $main::subscription = '/var/www/html/subscriptions.ens';  
+  
+  By default, the list of subscribers to a notebook on the subscription   
+  page shows both the names and emails.  If your notebook is accessible  
+  via the web externally, you may wish to disable the display of  
+  email addresses so that they cannot be collected by SPAM-bots.  
+  Use the line:  
+  $main::showemails = 0;  
+  to disable or  
+  $main::showemails = 1;  
+  to enable the display of email addresses.  
+  
+  It is also a good idea to set a reply address for email notifications:  
+  $main::subscriptionReplyTo = 'E-Note <NoReturnAddress@nowhere.com>';  
+    
+  In addition, there are two mechanisms for email to be sent from  
+  the enote program - SMTP and the UNIX sendmail command.  
+  To use SMTP directly, you must add the lines:  
+  $main::useSendmailCommand = 0;  
+  $main::SMTPHost = 'smtp.host.com';  
+  (substituting the hostname of an SMTP mail server)  
+  To use UNIX sendmail, add the lines:  
+  $main::useSendmailCommand = 1;  
+  $main::sendmail = '/usr/sbin/sendmail';  
+  
+  To use the SMTP method, you will also need the new Sendmail.pm file  
+  in the same directory as enotelib.pl.  
+  
+ 
+

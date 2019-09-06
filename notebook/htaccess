@@ -1,0 +1,10 @@
+#AuthType Basic
+#AuthName "timk"
+#AuthName "hpcras"
+#AuthUserFile /home/timk/.htpasswd
+#require valid-user
+AddType text/html .shtml
+Options +Indexes +FollowSymLinks +Includes +MultiViews  +ExecCGI
+AddHandler cgi-script .cgi .pl
+AddHandler server-parsed .html
+
