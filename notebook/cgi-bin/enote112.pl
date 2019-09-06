@@ -126,7 +126,7 @@ $main::notebook{'notebook'} = {(
   'dir'   => '/Users/timk/Sites/notebook/html/notebook/',
   'dir'   => '/var/www/html/notebook/html/notebook',
   'dir'   => '/home/timk/public_html/notebook/html/notebook/',
-  'dir'   => '/Users/tkaiser/Sites/notebook/html/notebook/',
+  'dir'   => '/home/pi/public_html/notebook/html/notebook/',
   'title' => "Project Notebook",
   )};
 # Example of how to specify additional notebooks
@@ -189,7 +189,7 @@ $main::flock = 0;
 #$main::libdir = '/Users/timk/Sites/notebook/cgi-bin';
 #$main::libdir = '/var/www/html/notebook/cgi-bin';
 $main::libdir = '/home/timk/public_html/notebook/cgi-bin';
-$main::libdir = '/Users/tkaiser/Sites/notebook/cgi-bin';
+$main::libdir = '/home/pi/public_html/notebook/cgi-bin';
 
 #  The relative URL for this configuration script.
 $main::script = '../cgi-bin/enote112.pl';

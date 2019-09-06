@@ -68,7 +68,7 @@ $main::copyright = "Copyright (C) 1996-2004  Oak Ridge National Laboratory";
 
 
 # debugging aids
-use CGI::Carp qw(fatalsToBrowser); #comment out when not debugging
+#use CGI::Carp qw(fatalsToBrowser); #comment out when not debugging
 my $debugvars = 0; # (set to 1 to show the important vars on the generated output)
 
 
