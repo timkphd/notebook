@@ -1,4 +1,10 @@
 <b>Need to look at raw text</b> 
+
+  284  sudo /usr/sbin/a2enmod cgid.load
+  286  sudo /usr/sbin/a2enmod include.load
+  287  sudo /usr/sbin/a2enmod rewrite.load
+  289  sudo /usr/sbin/a2enmod ssl.load
+
 pi@raspberrypi:/etc/apache2 $ ls mods-enabled/   
 access_compat.load  authz_host.load  deflate.load  mime.load         rewrite.load        status.load   
 alias.conf          authz_user.load  dir.conf      mpm_event.conf    setenvif.conf       userdir.conf   
@@ -47,31 +53,24 @@ AllowOverride All
 	</IfDefine>   
 </IfModule>   
    
-# vim: syntax=apache ts=4 sw=4 sts=4 sr noet   
-pi@raspberrypi:/etc/apache2 $ cat conf-enabled/serve-cgi-bin.conf   
-<IfModule mod_alias.c>   
-	<IfModule mod_cgi.c>   
-		Define ENABLE_USR_LIB_CGI_BIN   
-	</IfModule>   
-   
-	<IfModule mod_cgid.c>   
-		Define ENABLE_USR_LIB_CGI_BIN   
-	</IfModule>   
-   
-	<IfDefine ENABLE_USR_LIB_CGI_BIN>   
-		ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/   
-		<Directory "/usr/lib/cgi-bin">   
-			AllowOverride None   
-			Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch   
-			Require all granted   
-		</Directory>   
-<Directory "/var/www/html/sc">   
-AllowOverride All   
-</Directory>   
-	</IfDefine>   
-</IfModule>   
-   
-# vim: syntax=apache ts=4 sw=4 sts=4 sr noet   
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet 
+
+pi@raspberrypi:/etc/apache2 $ cat mods-enabled/userdir.conf 
+<IfModule mod_userdir.c>
+	UserDir public_html
+	UserDir disabled root
+
+	<Directory /home/*/public_html>
+		AllowOverride All
+		#AllowOverride FileInfo AuthConfig Limit Indexes
+		Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec
+		Require method GET POST OPTIONS
+	</Directory>
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+pi@raspberrypi:/etc/apache2 $ 
+
 pi@raspberrypi:/etc/apache2 $    
   
 pi@raspberrypi:~/public_html/notebook $ ls -l  
