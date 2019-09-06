@@ -1,0 +1,102 @@
+<!-- Author: thk -->
+<!-- Date: Fri Sep  6 22:17:46 2019 (GMT) -->
+<!-- Title: Setup -->
+<!-- Keywords:  -->
+<!-- Changes: Modified Fri Sep  6 22:17:46 2019 (GMT) thk | Added Thu Feb 14 18:36:45 2019 (GMT) thk | -->
+ 
+<b>Need to look at raw text</b>  
+ 
+  284  sudo /usr/sbin/a2enmod cgid.load 
+  286  sudo /usr/sbin/a2enmod include.load 
+  287  sudo /usr/sbin/a2enmod rewrite.load 
+  289  sudo /usr/sbin/a2enmod ssl.load 
+ 
+pi@raspberrypi:/etc/apache2 $ ls mods-enabled/    
+access_compat.load  authz_host.load  deflate.load  mime.load         rewrite.load        status.load    
+alias.conf          authz_user.load  dir.conf      mpm_event.conf    setenvif.conf       userdir.conf    
+alias.load          autoindex.conf   dir.load      mpm_event.load    setenvif.load       userdir.load    
+auth_basic.load     autoindex.load   env.load      negotiation.conf  socache_shmcb.load    
+authn_core.load     cgid.conf        filter.load   negotiation.load  ssl.conf    
+authn_file.load     cgid.load        include.load  reqtimeout.conf   ssl.load    
+authz_core.load     deflate.conf     mime.conf     reqtimeout.load   status.conf    
+pi@raspberrypi:/etc/apache2 $ ls conf-enabled/    
+charset.conf  localized-error-pages.conf  other-vhosts-access-log.conf  security.conf  serve-cgi-bin.conf    
+pi@raspberrypi:/etc/apache2 $ history | grep vi    
+   39  vi dotmp    
+   44  vi doinv    
+   51  vi doinv    
+   53  vi doinv    
+  123  vi conf-enabled/serve-cgi-bin.conf     
+  124  sudo vi conf-enabled/serve-cgi-bin.conf     
+  177  vi conf-enabled/serve-cgi-bin.conf     
+  179  vi enote112.pl     
+  205  vi apache2.conf     
+  207  vi mods-enabled/userdir.conf     
+  208  sudo vi mods-enabled/userdir.conf     
+  212  vi /home/pi/public_html/notebook/cgi-bin/enote112.pl    
+  220  vi /home/pi/public_html/notebook/cgi-bin/enotelib.pl    
+  232  history | grep vi    
+pi@raspberrypi:/etc/apache2 $ cat conf-enabled/serve-cgi-bin.conf    
+<IfModule mod_alias.c>    
+	<IfModule mod_cgi.c>    
+		Define ENABLE_USR_LIB_CGI_BIN    
+	</IfModule>    
+    
+	<IfModule mod_cgid.c>    
+		Define ENABLE_USR_LIB_CGI_BIN    
+	</IfModule>    
+    
+	<IfDefine ENABLE_USR_LIB_CGI_BIN>    
+		ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/    
+		<Directory "/usr/lib/cgi-bin">    
+			AllowOverride None    
+			Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch    
+			Require all granted    
+		</Directory>    
+<Directory "/var/www/html/sc">    
+AllowOverride All    
+</Directory>    
+	</IfDefine>    
+</IfModule>    
+    
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet  
+ 
+pi@raspberrypi:/etc/apache2 $ cat mods-enabled/userdir.conf  
+<IfModule mod_userdir.c> 
+	UserDir public_html 
+	UserDir disabled root 
+ 
+	<Directory /home/*/public_html> 
+		AllowOverride All 
+		#AllowOverride FileInfo AuthConfig Limit Indexes 
+		Options MultiViews Indexes SymLinksIfOwnerMatch IncludesNoExec 
+		Require method GET POST OPTIONS 
+	</Directory> 
+</IfModule> 
+ 
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet 
+pi@raspberrypi:/etc/apache2 $  
+ 
+pi@raspberrypi:/etc/apache2 $     
+   
+pi@raspberrypi:~/public_html/notebook $ ls -l   
+total 40   
+drwxr-xr-x 3 pi pi  4096 Sep  6 12:01 cgi-bin   
+-rw-r--r-- 1 pi pi  3339 Sep  6 10:14 enote1_12_readme.txt   
+-rw-r--r-- 1 pi pi   155 Sep  6 10:14 hello.cgi   
+-rw-r--r-- 1 pi pi   260 Sep  6 10:14 htaccess   
+drwxr-xr-x 4 pi pi  4096 Sep  6 10:14 html   
+-rw-r--r-- 1 pi pi 12669 Sep  6 10:14 install.txt   
+-rw-r--r-- 1 pi pi    47 Sep  6 10:14 README.md   
+pi@raspberrypi:~/public_html/notebook $ cd html/   
+pi@raspberrypi:~/public_html/notebook/html $ ls -l   
+total 84   
+-rw-r--r-- 1 www-data www-data 68473 Sep  6 10:14 cover.jpg   
+-rw-r--r-- 1 www-data www-data   418 Sep  6 10:14 enote.html   
+drwxr-xr-x 2 www-data www-data  4096 Sep  6 10:14 gifs   
+drwxr-xr-x 2 www-data www-data  4096 Sep  6 12:03 notebook   
+-rw-r--r-- 1 www-data www-data    31 Sep  6 10:14 subscriptions.ens   
+pi@raspberrypi:~/public_html/notebook/html $    
+   
+   
+
