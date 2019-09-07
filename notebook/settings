@@ -14,6 +14,7 @@ sudo /usr/sbin/a2enmod cgid.load
 sudo /usr/sbin/a2enmod include.load
 sudo /usr/sbin/a2enmod rewrite.load
 sudo /usr/sbin/a2enmod ssl.load
+sudo /usr/sbin/a2enmod userdir.load
 
 pi@raspberrypi:/etc/apache2 $ ls mods-enabled/   
 access_compat.load  authz_host.load  deflate.load  mime.load         rewrite.load        status.load   
@@ -84,6 +85,9 @@ drwxr-xr-x 4 pi pi  4096 Sep  6 10:14 html
 -rw-r--r-- 1 pi pi 12669 Sep  6 10:14 install.txt  
 -rw-r--r-- 1 pi pi    47 Sep  6 10:14 README.md  
 pi@raspberrypi:~/public_html/notebook
+
+cd /home/pi/public_html/notebook/html
+sudo chown -R www-data:www-data *
 
   
 pi@raspberrypi:~/public_html/notebook/html $ ls -l  
