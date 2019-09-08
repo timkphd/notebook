@@ -30,10 +30,13 @@ charset.conf  localized-error-pages.conf  other-vhosts-access-log.conf  security
 
 sudo vi conf-enabled/serve-cgi-bin.conf    
 sudo vi mods-enabled/userdir.conf    
+
+#make a script out of the next two cats and run it using sudo
+#!/bin/bash
 cp /etc/apache2/conf-enabled/serve-cgi-bin.conf ~pi/serve-cgi-bin.conf.org
 cp /etc/apache2/mods-enabled/userdir.conf  ~pi/userdir.conf.org
 
-sudo cat << XXX >> /etc/apache2/conf-enabled/serve-cgi-bin.conf   
+cat << XXX >> /etc/apache2/conf-enabled/serve-cgi-bin.conf   
 <IfModule mod_alias.c>   
 	<IfModule mod_cgi.c>   
 		Define ENABLE_USR_LIB_CGI_BIN   
@@ -61,7 +64,7 @@ sudo cat << XXX >> /etc/apache2/conf-enabled/serve-cgi-bin.conf
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet 
 XXX
 
-sudo cat << XXX >> cat mods-enabled/userdir.conf 
+cat << XXX >> /etc/apache2/mods-enabled/userdir.conf 
 <IfModule mod_userdir.c>
 	UserDir public_html
 	UserDir disabled root
