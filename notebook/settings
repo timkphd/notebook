@@ -30,7 +30,10 @@ charset.conf  localized-error-pages.conf  other-vhosts-access-log.conf  security
 
 sudo vi conf-enabled/serve-cgi-bin.conf    
 sudo vi mods-enabled/userdir.conf    
-pi@raspberrypi:/etc/apache2 $ cat conf-enabled/serve-cgi-bin.conf   
+cp /etc/apache2/conf-enabled/serve-cgi-bin.conf ~pi/serve-cgi-bin.conf.org
+cp /etc/apache2/mods-enabled/userdir.conf  ~pi/userdir.conf.org
+
+sudo cat << XXX >> /etc/apache2/conf-enabled/serve-cgi-bin.conf   
 <IfModule mod_alias.c>   
 	<IfModule mod_cgi.c>   
 		Define ENABLE_USR_LIB_CGI_BIN   
@@ -56,8 +59,9 @@ pi@raspberrypi:/etc/apache2 $ cat conf-enabled/serve-cgi-bin.conf
 </IfModule>   
    
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet 
+XXX
 
-pi@raspberrypi:/etc/apache2 $ cat mods-enabled/userdir.conf 
+sudo cat << XXX >> cat mods-enabled/userdir.conf 
 <IfModule mod_userdir.c>
 	UserDir public_html
 	UserDir disabled root
@@ -73,6 +77,7 @@ pi@raspberrypi:/etc/apache2 $ cat mods-enabled/userdir.conf
 </IfModule>
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+XXX
 
 ####### Required ownership and permissions:  
 pi@raspberrypi:~/public_html/notebook $ ls -l  
